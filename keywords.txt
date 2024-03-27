@@ -1,0 +1,45 @@
+#######################################
+# Syntax Coloring Map For LilyGO T-Wristband and T-Glass By lewis He
+# github:https://github.com/Xinyuan-LilyGO/LilyGO-T-Wristband-and-T-Glass
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+LilyGo_Wristband	KEYWORD1
+LilyGo_Class	KEYWORD1
+
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+beginLvglHelper	KEYWORD2
+begin	KEYWORD2
+setBrightness	KEYWORD2
+getBrightness	KEYWORD2
+setRotation	KEYWORD2
+setAddrWindow	KEYWORD2
+pushColors	KEYWORD2
+width	KEYWORD2
+height	KEYWORD2
+getPoint	KEYWORD2
+getBattVoltage	KEYWORD2
+attachRTC	KEYWORD2
+sleep	KEYWORD2
+wakeup	KEYWORD2
+detachTouch	KEYWORD2
+getTouched	KEYWORD2
+isPressed	KEYWORD2
+flipHorizontal	KEYWORD2
+hasTouch	KEYWORD2
+getBatteryPercent	KEYWORD2
+vibration	KEYWORD2
+enableTouchWakeup	KEYWORD2
+needFullRefresh	KEYWORD2
+initMicrophone	KEYWORD2
+readMicrophone	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
