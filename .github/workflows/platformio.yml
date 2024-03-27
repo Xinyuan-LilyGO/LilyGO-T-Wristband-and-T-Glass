@@ -1,0 +1,59 @@
+name: PlatformIO CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    paths:
+      - "examples/**"
+      - "src/**"
+      - "platformio.ini"
+      - ".github/workflows/platformio.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        examples:
+          - examples/Glass/Glass6DoF
+          - examples/Glass/GlassBatteryVoltage
+          - examples/Glass/GlassDeepSleep
+          - examples/Glass/GlassFactory
+          - examples/Glass/GlassHelloWorld
+          - examples/Glass/GlassRtcAlarm
+          - examples/Glass/GlassRtcDateTime
+          - examples/Glass/GlassTouchButton
+          - examples/Glass/GlassTouchButtonEvent
+          - examples/Glass/GlassVoiceActivityDetection
+          - examples/Wristband/Wristband6DoF
+          - examples/Wristband/WristbandBatteryVoltage
+          - examples/Wristband/WristbandDeepSleep
+          - examples/Wristband/WristbandDisplayRotation
+          - examples/Wristband/WristbandDisplayVisualWindow1
+          - examples/Wristband/WristbandFactory
+          - examples/Wristband/WristbandHelloWorld
+          - examples/Wristband/WristbandLightSleep
+          - examples/Wristband/WristbandRtcAlarm
+          - examples/Wristband/WristbandRtcDateTime
+          - examples/Wristband/WristbandTouchButton
+          - examples/Wristband/WristbandTouchButtonEvent
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Run PlatformIO
+        run: |
+          export PLATFORMIO_SRC_DIR=${{ matrix.examples }}
+          pio run

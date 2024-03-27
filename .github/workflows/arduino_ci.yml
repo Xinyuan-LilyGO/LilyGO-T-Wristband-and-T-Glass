@@ -1,0 +1,63 @@
+name: Arduino_CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    paths:
+      - "examples/**"
+      - "src/**"
+      - ".github/workflows/arduino_ci.yml"
+    branches:
+      - t-watch-s3
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        examples:
+          - examples/Glass/Glass6DoF/Glass6DoF.ino
+          - examples/Glass/GlassBatteryVoltage/GlassBatteryVoltage.ino
+          - examples/Glass/GlassDeepSleep/GlassDeepSleep.ino
+          - examples/Glass/GlassFactory/GlassFactory.ino
+          - examples/Glass/GlassHelloWorld/GlassHelloWorld.ino
+          - examples/Glass/GlassRtcAlarm/GlassRtcAlarm.ino
+          - examples/Glass/GlassRtcDateTime/GlassRtcDateTime.ino
+          - examples/Glass/GlassTouchButton/GlassTouchButton.ino
+          - examples/Glass/GlassTouchButtonEvent/GlassTouchButtonEvent.ino
+          - examples/Glass/GlassVoiceActivityDetection/GlassVoiceActivityDetection.ino
+          - examples/Wristband/Wristband6DoF/Wristband6DoF.ino
+          - examples/Wristband/WristbandBatteryVoltage/WristbandBatteryVoltage.ino
+          - examples/Wristband/WristbandDeepSleep/WristbandDeepSleep.ino
+          - examples/Wristband/WristbandDisplayRotation/WristbandDisplayRotation.ino
+          - examples/Wristband/WristbandDisplayVisualWindow1/WristbandDisplayVisualWindow1.ino
+          - examples/Wristband/WristbandFactory/WristbandFactory.ino
+          - examples/Wristband/WristbandHelloWorld/WristbandHelloWorld.ino
+          - examples/Wristband/WristbandLightSleep/WristbandLightSleep.ino
+          - examples/Wristband/WristbandRtcAlarm/WristbandRtcAlarm.ino
+          - examples/Wristband/WristbandRtcDateTime/WristbandRtcDateTime.ino
+          - examples/Wristband/WristbandTouchButton/WristbandTouchButton.ino
+          - examples/Wristband/WristbandTouchButtonEvent/WristbandTouchButtonEvent.ino
+    env:
+      EXAMPLES: ${{matrix.examples}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Arduino Ci
+        run: |
+          wget https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz -O arduino-cli.tar.gz ;
+          sudo tar xf arduino-cli.tar.gz -C /usr/local/bin arduino-cli ;
+          arduino-cli config init ;
+          arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json ;
+          arduino-cli core update-index ;
+          arduino-cli core install esp32:esp32@2.0.9 ;
+
+      - name: Build examples
+        run: |
+          mkdir -p $HOME/Arduino/libraries ;
+          cp  -r $PWD/libdeps/* $HOME/Arduino/libraries
+
+          cd $GITHUB_WORKSPACE ;
+          arduino-cli compile -besp32:esp32:esp32s3:CDCOnBoot=cdc,PartitionScheme=huge_app,PSRAM=enabled --library . $PWD/$EXAMPLES ;
