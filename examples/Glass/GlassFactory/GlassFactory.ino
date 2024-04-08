@@ -63,6 +63,7 @@ static lv_timer_t *sensor_timer;
 static lv_timer_t *datetime_timer;
 
 Madgwick filter;
+LilyGo_Button bootPin;
 
 //! You can use EspTouch to configure the network key without changing the WiFi password below
 #ifndef WIFI_SSID
@@ -165,6 +166,12 @@ void setup()
         }
     }
 
+    // Initialize boot pin
+    bootPin.init(BOARD_BOOT_PIN);
+
+    // Set boot button callback function
+    bootPin.setEventCallback(button_event_callback);
+
     // Set the default touch threshold. Depending on the contact surface, the touch sensitivity may need to be adjusted.
     amoled.setTouchThreshold(200);
 
@@ -182,78 +189,6 @@ void setup()
 
     // Initialize onboard PDM microphone
     amoled.initMicrophone();
-
-
-#if 0
-#if 01
-    lv_obj_t *window = lv_obj_create(lv_scr_act());
-    lv_obj_set_style_pad_all(window, 0, 0);
-    // lv_obj_set_pos(window, 0, amoled.width() - 126);
-    // lv_obj_set_pos(window, 0, GlassViewable_X_Offset);
-
-    lv_obj_set_pos(window, 0, GlassViewable_X_Offset);
-    lv_obj_set_size(window, GlassViewableWidth, GlassViewableHeight);
-    lv_obj_align(window, LV_ALIGN_RIGHT_MID, 0, 0);
-    // lv_obj_set_style_bg_color(window, lv_color_black(), 0);
-    // lv_obj_set_style_radius(window, 0, 0);
-
-    lv_obj_t *label1 = lv_label_create(window);
-    lv_label_set_long_mode(label1, LV_LABEL_LONG_WRAP); /*Break the long lines*/
-    lv_label_set_recolor(label1, true);                 /*Enable re-coloring by commands in the text*/
-    lv_label_set_text(label1, "123456");
-    lv_obj_set_style_text_color(label1, lv_color_black(), LV_PART_MAIN);
-    lv_obj_set_style_text_font(label1, &lv_font_montserrat_28, LV_PART_MAIN);
-    lv_obj_align(label1, LV_ALIGN_CENTER, 0, 0);
-
-
-    // lv_timer_create([](lv_timer_t *t) {
-    //     lv_obj_t *label = (lv_obj_t *)(t->user_data);
-    //     lv_label_set_text_fmt(label, "%s", String(millis()).c_str());
-    // }, 1000, label1);
-#else
-    lv_align_t  align[] = {LV_ALIGN_TOP_LEFT,
-                           LV_ALIGN_TOP_MID,
-                           LV_ALIGN_TOP_RIGHT,
-                           LV_ALIGN_BOTTOM_LEFT,
-                           LV_ALIGN_BOTTOM_MID,
-                           LV_ALIGN_BOTTOM_RIGHT,
-                           LV_ALIGN_LEFT_MID,
-                           LV_ALIGN_RIGHT_MID
-                          };
-    for (int i = 0; i < sizeof(align) / sizeof(*align); ++i) {
-        lv_obj_t *btn = lv_btn_create(lv_scr_act());
-        lv_obj_t *label = lv_label_create(btn);
-        lv_label_set_text_fmt(label, "%d", i);
-        lv_obj_center(btn);
-        lv_obj_align(btn, align[i], 0, 0);
-    }
-
-
-    // amoled.setRotation(1);
-    // extern const uint8_t test_image_map[74088];
-    // amoled.setAddrWindow(0, 0, 294, 126);
-    // amoled.pushColors((uint16_t * )test_image_map, sizeof(test_image_map) / 2);
-#endif
-
-    lv_obj_del(label1);
-
-    lv_align_t  align[] = {LV_ALIGN_TOP_LEFT,
-                           LV_ALIGN_TOP_MID,
-                           LV_ALIGN_TOP_RIGHT,
-                           LV_ALIGN_BOTTOM_LEFT,
-                           LV_ALIGN_BOTTOM_MID,
-                           LV_ALIGN_BOTTOM_RIGHT,
-                           LV_ALIGN_LEFT_MID,
-                           LV_ALIGN_RIGHT_MID
-                          };
-    for (int i = 0; i < sizeof(align) / sizeof(*align); ++i) {
-        lv_obj_t *btn = lv_btn_create(window);
-        lv_obj_t *label = lv_label_create(btn);
-        lv_label_set_text_fmt(label, "%d", i);
-        lv_obj_center(btn);
-        lv_obj_align(btn, align[i], 0, 0);
-    }
-#endif
 
     // Initialize Sensor
     accel_data_buffer.resize(sizeof(struct bhy2_data_xyz) * 2);
@@ -331,9 +266,9 @@ void setup()
         Serial.println("[Error] : WiFi ssid and password are not configured correctly");
         Serial.println("[Error] : WiFi ssid and password are not configured correctly");
         Serial.println("[Error] : WiFi ssid and password are not configured correctly");
+    } else {
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     }
-
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
     // Initialize factory gui
     lv_gui_init();
@@ -343,6 +278,8 @@ void loop()
 {
     // Update 6-axis sensor and button state
     amoled.update();
+    // Update BOOT state
+    bootPin.update();
 
     lv_timer_handler();
     delay(1);
