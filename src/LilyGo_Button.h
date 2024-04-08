@@ -34,9 +34,9 @@ enum ButtonState {
 class LilyGo_Button
 {
     typedef void (*event_callback) (ButtonState state);
+    typedef bool (*gpio_read_callback) ();
 public:
-
-    void init(uint32_t gpio, uint32_t debounceTimeout = DEBOUNCE_MS);
+    void init(uint32_t gpio, uint32_t debounceTimeout = DEBOUNCE_MS, gpio_read_callback cb = NULL);
     void setDebounceTime(uint32_t ms);
     void setEventCallback(event_callback f);
     void update();
@@ -58,4 +58,5 @@ private:
     bool longclick_detected = false;
     bool long_pressed_detected = false;
     event_callback event_cb = NULL;
+    gpio_read_callback read_pin_cb = NULL;
 };

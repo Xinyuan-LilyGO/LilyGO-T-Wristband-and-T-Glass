@@ -338,6 +338,10 @@ static esp_err_t panel_jd9613_set_rotation(esp_lcd_panel_t *panel, uint8_t r)
 }
 __END_DECLS
 
+static bool touchPadReadFunction()
+{
+    return touchInterruptGetLastStatus(BOARD_TOUCH_BUTTON) == 0;
+}
 
 LilyGo_Wristband::LilyGo_Wristband(): _brightness(AMOLED_DEFAULT_BRIGHTNESS), panel_handle(NULL), threshold(2000)
 {
@@ -386,7 +390,7 @@ bool LilyGo_Wristband::begin()
     // Initialize touch button
     touchAttachInterrupt(BOARD_TOUCH_BUTTON, touchISR, threshold);
 
-    LilyGo_Button::init(BOARD_TOUCH_BUTTON);
+    LilyGo_Button::init(BOARD_TOUCH_BUTTON, 50, touchPadReadFunction);
 
     // Initialize vibration motor
     tone(BOARD_VIBRATION_PIN, 1000, 50);

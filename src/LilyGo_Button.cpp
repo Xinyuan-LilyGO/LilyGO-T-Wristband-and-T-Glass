@@ -8,9 +8,14 @@
  */
 #include "LilyGo_Button.h"
 
-void LilyGo_Button::init(uint32_t gpio, uint32_t debounceTimeout )
+
+void LilyGo_Button::init(uint32_t gpio,  uint32_t debounceTimeout, gpio_read_callback cb)
 {
     this->gpio = gpio;
+    read_pin_cb = cb;
+    if (!read_pin_cb) {
+        pinMode(this->gpio, INPUT_PULLUP);
+    }
     setDebounceTime(debounceTimeout);
 }
 
@@ -46,7 +51,11 @@ void LilyGo_Button::update()
 {
     prev_state = curr_state;
 
-    curr_state = touchInterruptGetLastStatus(gpio) == 0;
+    if (read_pin_cb) {
+        curr_state  = read_pin_cb();
+    } else {
+        curr_state = digitalRead(this->gpio) == LOW;
+    }
 
     if (prev_state == HIGH && curr_state == LOW) {
         down_ms = millis();
