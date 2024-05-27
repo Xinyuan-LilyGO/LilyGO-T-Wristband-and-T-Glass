@@ -76,8 +76,9 @@ examples/
 3. `Sketch` -> `Include Library` -> `Manage Libraries`
 4. `Library Search` -> `LilyGO T-Wristband and T-Glass` -> `Install` -> `Install ALL`
 5. `Library Search` -> `lvgl` -> `v8.4.0` -> `Install`
-6. `File` -> `Examples` -> `LilyGO T-Wristband and T-Glass` -> `Select the corresponding example`
-7. `Tools` -> , Make your selection according to the table below
+6. `Library Search` -> `SensorLib` -> `v0.1.8` -> `Install`
+7. `File` -> `Examples` -> `LilyGO T-Wristband and T-Glass` -> `Select the corresponding example`
+8. `Tools` -> , Make your selection according to the table below
    | Arduino IDE Setting                  | Value                                             |
    | ------------------------------------ | ------------------------------------------------- |
    | Board                                | **ESP32S3 Dev Module**                            |
@@ -100,9 +101,9 @@ examples/
 
    - The options in bold are required, others are selected according to actual conditions.
 
-6. Select `Port`
-7.  Click `upload` , Wait for compilation and writing to complete
-8.  If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
+9. Select `Port`
+10. Click `upload` , Wait for compilation and writing to complete
+11. If it cannot be written, or the USB device keeps flashing, please check the **FAQ** below
 
 ## 5️⃣ Arduino IDE Manual installation (not recommended)
 
@@ -207,7 +208,7 @@ examples/
 
 # 8️⃣ Depends on required libraries
 
-- [SensorLib](https://github.com/lewisxhe/SensorsLib)
+- [SensorLib 0.1.8](https://github.com/lewisxhe/SensorsLib)
 - [lvgl 8.4.0](https://github.com/lvgl/lvgl/tree/release/v8.4)
 - [MadgwickAHRS](https://github.com/arduino-libraries/MadgwickAHRS)
 <!-- - [SparkFun_MAX3010x_Sensor_Library](https://github.com/sparkfun/SparkFun_MAX3010x_Sensor_Library) -->
