@@ -4,7 +4,17 @@
  * @license   MIT
  * @copyright Copyright (c) 2024  ShenZhen XinYuan Electronic Technology Co., Ltd
  * @date      2023-10-23
- *
+ * @note      Arduino Setting
+ *            Tools ->
+ *                  Board:"ESP32S3 Dev Module"
+ *                  USB CDC On Boot:"Enable"
+ *                  USB DFU On Boot:"Disable"
+ *                  Flash Size : "4MB(32Mb)"
+ *                  Flash Mode"QIO 80MHz
+ *                  Partition Scheme:"Huge APP (3MB No OTA/1MB SPIFFS)"
+ *                  PSRAM:"QSPI PSRAM"
+ *                  Upload Mode:"UART0/Hardware CDC"
+ *                  USB Mode:"Hardware CDC and JTAG"
  */
 #include <LilyGo_Wristband.h>
 #include <LV_Helper.h>
