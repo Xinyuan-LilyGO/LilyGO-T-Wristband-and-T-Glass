@@ -54,7 +54,7 @@ void LilyGo_Button::update()
     if (read_pin_cb) {
         curr_state  = read_pin_cb();
     } else {
-        curr_state = digitalRead(this->gpio) == LOW;
+        curr_state = digitalRead(this->gpio) == HIGH;
     }
 
     if (prev_state == HIGH && curr_state == LOW) {
