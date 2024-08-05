@@ -8,8 +8,6 @@ on:
       - "examples/**"
       - "src/**"
       - ".github/workflows/arduino_ci.yml"
-    branches:
-      - t-watch-s3
 jobs:
   build:
     runs-on: ubuntu-latest
