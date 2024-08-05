@@ -9,6 +9,7 @@
 | Product(PinMap)  | Firmware                         |
 | ---------------- | -------------------------------- |
 | [T-Glass][1]     | [firmware](./T-Glass_0315.bin)   |
+| [T-Glass V2][1] | [firmware](./T-Glass_V2_GlassFactory_240805.bin)   |
 | [T-Wristband][2] | [firmware](./Wristband_0315.bin) |
 
 [1]: https://www.lilygo.cc/products/t-glass
