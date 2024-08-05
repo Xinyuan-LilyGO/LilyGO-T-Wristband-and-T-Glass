@@ -1,7 +1,7 @@
 <h1 align = "center">🌟LilyGO T-Wristband and T-Glass🌟</h1>
 
 ## News
-
+- **T-Glass** has two versions, the initial preview version and **T-GlassV2** version (modified prism reflection method). The difference between the two is only the display method, the hardware is the same
 - T-Wristband and T-Glass have the same hardware, but the viewing area is different due to the casing.
 - `LilyGO T-Wristband and T-Glass` depends on lvgl **v8.4.x** version. Currently lvgl has released lvgl **v9.0** version. When compilation error occurs, please check whether lvgl belongs to **v8.4.x**
 - The visual size of T-Wristband and T-Glass is different from the actual screen size. All examples are based on the lvgl graphics framework. Other image frameworks such as TFT_eSPI are not available here.
@@ -10,12 +10,12 @@
 
 | Product(PinMap)  | SOC            | Flash | PSRAM     | Resolution | Visible Area |
 | ---------------- | -------------- | ----- | --------- | ---------- | ------------ |
-| [T-Glass][1]     | ESP32-S3 FN4R2 | 4MB   | 2MB(QSPI) | 294x126    | 126x126      |
+| [T-Glass/V2][1]  | ESP32-S3 FN4R2 | 4MB   | 2MB(QSPI) | 294x126    | 126x126      |
 | [T-Wristband][2] | ESP32-S3 FN4R2 | 4MB   | 2MB(QSPI) | 294x126    | 126x250      |
 
 | Current consumption | Working current             | sleep current | sleep mode          |
 | ------------------- | --------------------------- | ------------- | ------------------- |
-| [T-Glass][1]        | (240MHz) WiFi On 90~230+ mA | about 300uA   | touch button wakeup |
+| [T-Glass/V2][1]     | (240MHz) WiFi On 90~230+ mA | about 300uA   | touch button wakeup |
 | [T-Wristband][2]    | (240MHz) WiFi On 90~230+ mA | about 300uA   | touch button wakeup |
 
 [1]: https://www.lilygo.cc/products/t-glass
@@ -24,12 +24,26 @@
 ## 2️⃣Examples
 
 ```txt
-examples/
-├── Glass
+./examples/
+├── Glass                  # Initial version
+│   ├── Glass6DoF 
+│   ├── GlassBatteryVoltage
+│   ├── GlassDeepSleep
+│   ├── GlassDisplayRotation
+│   ├── GlassFactory
+│   │   └── src
+│   ├── GlassHelloWorld
+│   ├── GlassRtcAlarm
+│   ├── GlassRtcDateTime
+│   ├── GlassTouchButton
+│   ├── GlassTouchButtonEvent
+│   └── GlassVoiceActivityDetection
+├── GlassV2                # Modify the reflective prism version         
 │   ├── Glass6DoF
 │   ├── GlassBatteryVoltage
 │   ├── GlassDeepSleep
 │   ├── GlassFactory
+│   │   └── src
 │   ├── GlassHelloWorld
 │   ├── GlassRtcAlarm
 │   ├── GlassRtcDateTime
@@ -43,6 +57,7 @@ examples/
     ├── WristbandDisplayRotation
     ├── WristbandDisplayVisualWindow1
     ├── WristbandFactory
+    │   └── src
     ├── WristbandHelloWorld
     ├── WristbandLightSleep
     ├── WristbandRtcAlarm
