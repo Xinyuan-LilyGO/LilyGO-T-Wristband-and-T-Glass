@@ -381,7 +381,7 @@ static void lv_tileview_add_datetime(lv_obj_t *parent)
     lv_label_set_text(time_label, "12:34");
     lv_obj_set_style_text_color(time_label, font_color, 0);
     lv_obj_set_style_text_font(time_label, &lv_font_montserrat_24, 0);
-    lv_obj_align(time_label, LV_ALIGN_CENTER, 0, lv_pct(5));
+    lv_obj_align(time_label, LV_ALIGN_CENTER, 0, -15);
 
     week_label = lv_label_create(time_cont);
     lv_obj_set_style_text_color(week_label, font_color, 0);
@@ -449,8 +449,8 @@ static void lv_tileview_add_noise_detect(lv_obj_t *parent)
 {
     lv_obj_t *noise = lv_label_create(parent);
     lv_obj_set_style_text_color(noise, font_color, LV_PART_MAIN);
-    lv_obj_set_style_text_font(noise, &lv_font_montserrat_10, LV_PART_MAIN);
-    lv_label_set_text(noise, "Noise count");
+    lv_obj_set_style_text_font(noise, &lv_font_montserrat_20, LV_PART_MAIN);
+    lv_label_set_text(noise, "Mic");
     lv_obj_align(noise, LV_ALIGN_CENTER, 0, -10);
 
     lv_obj_t *noise_cnt = lv_label_create(parent);
